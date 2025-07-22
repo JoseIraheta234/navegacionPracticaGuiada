@@ -23,10 +23,7 @@ const ShowUser = ({ navigation }) => {
   );
 
   const handleEdit = (user) => {
-    navigation.navigate("AddUser", { 
-      editUser: user,
-      isEditing: true 
-    });
+    navigation.navigate("EditUser", { user });
   };
 
   const handleDelete = (userId) => {

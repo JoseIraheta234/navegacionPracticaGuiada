@@ -37,48 +37,26 @@ const useFetchUser = () => {
     }
 
     try {
-      if (isEditing) {
-        // Actualizar usuario existente
-        const response = await fetch(`https://retoolapi.dev/zZhXYF/movil/${editingUserId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            nombre,
-            edad: parseInt(edad),
-            correo,
-          }),
-        });
+      const response = await fetch("https://retoolapi.dev/zZhXYF/movil", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nombre,
+          edad: parseInt(edad),
+          correo,
+        }),
+      });
 
-        if (response.ok) {
-          Alert.alert("Éxito", "Usuario actualizado correctamente");
-          resetForm();
-          fetchUsuarios();
-        } else {
-          Alert.alert("Error", "No se pudo actualizar el usuario");
-        }
+      if (response.ok) {
+        Alert.alert("Éxito", "Usuario guardado correctamente");
+        setNombre("");
+        setEdad("");
+        setCorreo("");
+        fetchUsuarios();
       } else {
-        // Crear nuevo usuario
-        const response = await fetch("https://retoolapi.dev/zZhXYF/movil", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            nombre,
-            edad: parseInt(edad),
-            correo,
-          }),
-        });
-
-        if (response.ok) {
-          Alert.alert("Éxito", "Usuario guardado correctamente");
-          resetForm();
-          fetchUsuarios();
-        } else {
-          Alert.alert("Error", "No se pudo guardar el usuario");
-        }
+        Alert.alert("Error", "No se pudo guardar el usuario");
       }
     } catch (error) {
       console.error(error);
